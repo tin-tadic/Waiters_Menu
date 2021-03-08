@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package loginRegister;
+package WaitersMenu;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -332,6 +332,12 @@ public class RegisterForm extends javax.swing.JFrame {
                                 //If the registration is successful
                                 if(insertPS.executeUpdate() != 0) {
                                     JOptionPane.showMessageDialog(null, "Account created successfully!", "Success!", 2);
+                                    //Forward the user to the login page
+                                    LoginForm lf = new LoginForm();
+                                    lf.setVisible(true);
+                                    lf.pack();
+                                    lf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                    this.dispose();
                                 }
                                 //In the event that the registration fails, it will default to the catch block and show a database error    
                             }

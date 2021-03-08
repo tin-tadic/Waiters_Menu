@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package loginRegister;
+package WaitersMenu;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -283,6 +283,11 @@ public class LoginForm extends javax.swing.JFrame {
 
                 if (rs.next()) {
                     System.out.println("Logged in");
+                    MainMenu mm = new MainMenu(username);
+                    mm.setVisible(true);
+                    mm.pack();
+                    mm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid Username/Password", "Login Error", 2);
                 }
