@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -284,7 +285,11 @@ public class RegisterForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backToLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToLoginButtonActionPerformed
-        
+        LoginForm lf = new LoginForm();
+        lf.setVisible(true);
+        lf.pack();
+        lf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_backToLoginButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -317,10 +322,22 @@ public class RegisterForm extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "That username is already taken!", "Username error", 2);
                             } else {
                                 //If all of the checks go through, we can register the user
-                                System.out.println("All is good");
+                                PreparedStatement insertPS;
+                                
+                                String registerUserQuery = "INSERT INTO `users`(`username`, `password`) VALUES (?, ?)";
+                                insertPS = My_CNX.getConnection().prepareStatement(registerUserQuery);
+                                insertPS.setString(1, username);
+                                insertPS.setString(2, password);
+                                
+                                //If the registration is successful
+                                if(insertPS.executeUpdate() != 0) {
+                                    JOptionPane.showMessageDialog(null, "Account created successfully!", "Success!", 2);
+                                }
+                                //In the event that the registration fails, it will default to the catch block and show a database error    
                             }
                         } catch (SQLException ex) {
                             JOptionPane.showMessageDialog(null, "Database connection error!", "Database Error", 2);
+                            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         //end of the check
                     } else {
