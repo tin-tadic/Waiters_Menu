@@ -58,14 +58,15 @@ public class LoginForm extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(0, 0, 100, 100));
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(204, 0, 51));
+        jPanel1.setBackground(new java.awt.Color(132, 50, 155));
 
-        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(210, 0, 139));
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel3.setBackground(new java.awt.Color(255, 0, 139));
 
-        logInButton.setBackground(new java.awt.Color(73, 0, 255));
+        logInButton.setBackground(new java.awt.Color(132, 50, 155));
         logInButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        logInButton.setForeground(new java.awt.Color(0, 239, 228));
         logInButton.setText("Log In");
         //Actually allows the background to show...
         logInButton.setBorderPainted(false);
@@ -77,9 +78,9 @@ public class LoginForm extends javax.swing.JFrame {
             }
         });
 
-        exitButton.setBackground(new java.awt.Color(0, 0, 255));
+        exitButton.setBackground(new java.awt.Color(132, 50, 155));
         exitButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        exitButton.setForeground(new java.awt.Color(204, 102, 0));
+        exitButton.setForeground(new java.awt.Color(0, 239, 228));
         exitButton.setText("Exit");
         exitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         exitButton.setOpaque(true);
@@ -92,14 +93,19 @@ public class LoginForm extends javax.swing.JFrame {
         });
 
         usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        usernameLabel.setForeground(new java.awt.Color(0, 239, 228));
         usernameLabel.setText("Username: ");
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        passwordLabel.setForeground(new java.awt.Color(0, 239, 228));
         passwordLabel.setText("Password:");
 
+        usernameInputBorder.setBackground(new java.awt.Color(0, 239, 228));
         usernameInputBorder.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        usernameInput.setBackground(new java.awt.Color(132, 50, 155));
         usernameInput.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        usernameInput.setForeground(new java.awt.Color(0, 239, 228));
 
         javax.swing.GroupLayout usernameInputBorderLayout = new javax.swing.GroupLayout(usernameInputBorder);
         usernameInputBorder.setLayout(usernameInputBorderLayout);
@@ -112,9 +118,12 @@ public class LoginForm extends javax.swing.JFrame {
             .addComponent(usernameInput, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
         );
 
+        passwordInputBorder.setBackground(new java.awt.Color(0, 239, 228));
         passwordInputBorder.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        passwordInput.setBackground(new java.awt.Color(132, 50, 155));
         passwordInput.setFont(new java.awt.Font("Segoe UI", 0, 25)); // NOI18N
+        passwordInput.setForeground(new java.awt.Color(0, 239, 228));
 
         javax.swing.GroupLayout passwordInputBorderLayout = new javax.swing.GroupLayout(passwordInputBorder);
         passwordInputBorder.setLayout(passwordInputBorderLayout);
@@ -127,6 +136,7 @@ public class LoginForm extends javax.swing.JFrame {
             .addComponent(passwordInput, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
         );
 
+        createAccountLabel.setForeground(new java.awt.Color(0, 239, 228));
         createAccountLabel.setText("Create an account");
         createAccountLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         createAccountLabel.setName(""); // NOI18N
@@ -183,9 +193,11 @@ public class LoginForm extends javax.swing.JFrame {
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {passwordInputBorder, passwordLabel, usernameInputBorder, usernameLabel});
 
+        jPanel4.setBackground(new java.awt.Color(132, 50, 155));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         LOGIN_text.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        LOGIN_text.setForeground(new java.awt.Color(0, 239, 228));
         LOGIN_text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LOGIN_text.setText("LOGIN");
 
