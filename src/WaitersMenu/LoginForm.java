@@ -294,11 +294,11 @@ public class LoginForm extends javax.swing.JFrame {
                 rs = st.executeQuery();
 
                 if (rs.next()) {
-                    System.out.println("Logged in");
                     MainMenu mm = new MainMenu(username);
                     mm.setVisible(true);
                     mm.pack();
                     mm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    mm.setExtendedState(MainMenu.MAXIMIZED_BOTH);
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid Username/Password", "Login Error", 2);

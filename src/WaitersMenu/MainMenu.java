@@ -5,14 +5,20 @@
  */
 package WaitersMenu;
 
+import java.awt.Color;
+import static java.lang.String.valueOf;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -30,8 +36,6 @@ public class MainMenu extends javax.swing.JFrame {
         this.loggedInUsername = username;
     }
     
-    
-    //TODO:: Check how the functions in getAvailableGoods send the data. Are they really ints and floats or are they all Strings?
     //Variables in which the details of each drink/whatever are stored.
     //Only need the getter function because to set you call `getItem_Names().add("unicorn dreams")`
     private ArrayList<String> item_Names = new ArrayList<>();
@@ -46,6 +50,14 @@ public class MainMenu extends javax.swing.JFrame {
     public ArrayList getItem_Prices() {
         return item_Prices;
     }
+    
+    //Used to create trash icon labels for the article rows in the current receipt
+    private ArrayList<JLabel> listOfLabels = new ArrayList<>();
+    public ArrayList getListOfLabels() {
+        return listOfLabels;
+    }
+    
+
     
     /**
      * Creates new form MainMenu
@@ -65,17 +77,35 @@ public class MainMenu extends javax.swing.JFrame {
         //Need to set username because the initComponents() method needs it
         setUsername(username);
         initComponents();
-        this.setExtendedState(MainMenu.MAXIMIZED_BOTH);
-        this.setLocationRelativeTo(null);
         
         //Can't fill the ComboBox before it exists
-        getAvailabaleGoods();        
+        getAvailabaleGoods();
+    }
+
+    
+    public void calculateSum() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        DefaultTableModel model = (DefaultTableModel) currentReceiptTable.getModel();
+        int rowCount = currentReceiptTable.getRowCount();
+        float sum = 0;
+        
+        //To calculate the sum we have to get the current quantity of items, and multiply it with the unit price.
+        //That is because df.format() outputs floats with a comma, which aren't usable for summing
+        for (int i = 0; i < rowCount; i++) {
+            //Get name of item (to get the price) + Qty and redo the calculations for SUM
+            String nameOfItem = (String) model.getValueAt(i, 0);
+            
+            int currentValue = (int) model.getValueAt(i, 1);
+            sum += currentValue * Float.parseFloat((String) getItem_Prices().get(getItem_Names().indexOf(nameOfItem)));
+
+        }
+        sumDisplayLabel.setText(valueOf(df.format(sum)));
     }
     
     public void getAvailabaleGoods() {
         PreparedStatement st;
         ResultSet rs;
-        String query = "SELECT * FROM `goods`";
+        String query = "SELECT * FROM `items`";
         try {
             st = My_CNX.getConnection().prepareStatement(query);
             rs = st.executeQuery();
@@ -83,19 +113,47 @@ public class MainMenu extends javax.swing.JFrame {
             while (rs.next()) {
                 //Remeber it for manipulation
                 getItem_Names().add(rs.getString("item_name"));
-                getItem_IDs().add(rs.getString("id"));
-                getItem_Prices().add(rs.getString("price"));
+                getItem_IDs().add(rs.getString("item_id"));
+                getItem_Prices().add(rs.getString("item_price"));
                 //Add it to the box for selection
-                jComboBox1.addItem(rs.getString("item_name"));
+                selectWhatToAdd.addItem(rs.getString("item_name"));                
             }
-            
-            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Database connection error! \n Unable to fetch items!", "Database Error", 2);
             Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public int existsInTable(JTable table, String entry) {
+        int rowCount = table.getRowCount();
+        
+        for (int i = 0; i < rowCount; i++) {
+            String rowEntry = table.getValueAt(i, 0).toString();
+            if (entry.equals(rowEntry)) {
+                return i;
+            }
+        }
+        return -1;
+    }
     
+    //This function only updates the Quantity column
+    public void updateIfExists(int rowNumber) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        
+        DefaultTableModel model = (DefaultTableModel) currentReceiptTable.getModel();
+        String nameOfItem = (String) model.getValueAt(rowNumber, 0);
+        //"updating" rows is deleting the old one and inserting a new one
+        int currentValue = (int) model.getValueAt(rowNumber, 1) + 1;
+        float newPrice = Float.parseFloat((String) getItem_Prices().get(getItem_Names().indexOf(nameOfItem)));
+        model.removeRow(rowNumber);
+        
+        //New row creation: remove item name, quantity, total price for that row
+        model.addRow(new Object[] { 
+            getItem_Names().get(getItem_Names().indexOf(nameOfItem)), 
+            currentValue, 
+            df.format(newPrice * currentValue) 
+        });
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,24 +172,23 @@ public class MainMenu extends javax.swing.JFrame {
         usernamePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        selectWhatToAdd = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
         jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        sumDisplayLabel = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        currentReceiptTable = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        addToReceipt = new javax.swing.JLabel();
+        removeFromReceipt = new javax.swing.JLabel();
+        clearCurrentReceipt = new javax.swing.JButton();
+        finalizeCurrentReceipt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
@@ -141,7 +198,13 @@ public class MainMenu extends javax.swing.JFrame {
         nameLabel.setText("Caffe Name");
         nameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        logoutIcon.setText("Here be the logout icon");
+        logoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/WaitersMenu/images/trash.png"))); // NOI18N
+        logoutIcon.setBackground(new Color (0, 0, 0, 0));
+        logoutIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutIconMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText(getUsername());
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -189,48 +252,25 @@ public class MainMenu extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
-        jComboBox1.setToolTipText("");
-        AutoCompletion.enable(jComboBox1);
+        selectWhatToAdd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+        selectWhatToAdd.setToolTipText("");
+        AutoCompletion.enable(selectWhatToAdd);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText("Previous receipts:");
-
-        jLabel10.setText("Items");
-
-        jLabel11.setText("Price");
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 486, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 337, Short.MAX_VALUE))
         );
 
@@ -241,8 +281,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel4.setText("SUM");
 
-        jLabel5.setText("SUM TTAL");
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -251,7 +289,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sumDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -259,54 +297,45 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(sumDisplayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel7.setBackground(new java.awt.Color(51, 51, 51));
+        jScrollPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jLabel6.setText("Item name:");
-
-        jLabel7.setText("Remove");
-
-        jLabel8.setText("Price");
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        currentReceiptTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+            },
+            new String [] {
+                "Name", "Quantity", "Price"
+            }
+        ));
+        currentReceiptTable.setEnabled(false);
+        jScrollPane2.setViewportView(currentReceiptTable);
+        currentReceiptTable.getTableHeader().setReorderingAllowed(false);
+        currentReceiptTable.setRowHeight(50);
+        currentReceiptTable.getColumnModel().getColumn(0).setMinWidth(250);
+        currentReceiptTable.getColumnModel().getColumn(0).setMaxWidth(300);
+        currentReceiptTable.getColumnModel().getColumn(0).setPreferredWidth(250);
+        currentReceiptTable.getColumnModel().getColumn(1).setMinWidth(75);
+        currentReceiptTable.getColumnModel().getColumn(1).setMaxWidth(75);
+        currentReceiptTable.getColumnModel().getColumn(1).setPreferredWidth(75);
+        currentReceiptTable.getColumnModel().getColumn(2).setMinWidth(100);
+        currentReceiptTable.getColumnModel().getColumn(2).setMaxWidth(100);
+        currentReceiptTable.getColumnModel().getColumn(2).setPreferredWidth(100);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -330,7 +359,35 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel12.setText("+ icon");
+        addToReceipt.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        addToReceipt.setText("+");
+        addToReceipt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addToReceiptMouseClicked(evt);
+            }
+        });
+
+        removeFromReceipt.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        removeFromReceipt.setText("-");
+        removeFromReceipt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removeFromReceiptMouseClicked(evt);
+            }
+        });
+
+        clearCurrentReceipt.setText("Clear");
+        clearCurrentReceipt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearCurrentReceiptActionPerformed(evt);
+            }
+        });
+
+        finalizeCurrentReceipt.setText("Finalize");
+        finalizeCurrentReceipt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finalizeCurrentReceiptActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -342,42 +399,50 @@ public class MainMenu extends javax.swing.JFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(selectWhatToAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addToReceipt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(removeFromReceipt))
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 380, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(clearCurrentReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(finalizeCurrentReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(26, 26, 26)
-                    .addComponent(jLabel3)
-                    .addContainerGap(1067, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                            .addComponent(clearCurrentReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                            .addComponent(finalizeCurrentReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(selectWhatToAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(addToReceipt)
+                                .addComponent(removeFromReceipt)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(31, 31, 31)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(75, 75, 75)
-                    .addComponent(jLabel3)
-                    .addContainerGap(618, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -411,17 +476,158 @@ public class MainMenu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addToReceiptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addToReceiptMouseClicked
+       int indexOfSelectedItem = getItem_Names().indexOf(selectWhatToAdd.getSelectedItem());
+       DefaultTableModel model = (DefaultTableModel) currentReceiptTable.getModel();
+       
+       //Check if it already exists in the table. If it does then just """update""" it
+       int rowNumber = existsInTable(currentReceiptTable, (String) getItem_Names().get(indexOfSelectedItem));
+       if( rowNumber != -1){
+           updateIfExists(rowNumber);
+       } else {
+           //New row creation: remove item name, quantity, total price for that row
+           model.addRow(new Object[] {
+               getItem_Names().get(indexOfSelectedItem), 
+               1, 
+               getItem_Prices().get(indexOfSelectedItem)
+           });
+       }
+       calculateSum();
+    }//GEN-LAST:event_addToReceiptMouseClicked
+
+    private void logoutIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutIconMouseClicked
+        JOptionPane.showMessageDialog(null, "Successfully logged out!", "Logged out", 2);
+        System.exit(0);
+    }//GEN-LAST:event_logoutIconMouseClicked
+
+    private void removeFromReceiptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeFromReceiptMouseClicked
+        int indexOfSelectedItem = getItem_Names().indexOf(selectWhatToAdd.getSelectedItem());
+        DefaultTableModel model = (DefaultTableModel) currentReceiptTable.getModel();
+       
+       //Check if it already exists in the table. If it does then just """update""" it
+       int rowNumber = existsInTable(currentReceiptTable, (String) getItem_Names().get(indexOfSelectedItem));
+       if(rowNumber != -1){
+           int currentValue = (int) model.getValueAt(rowNumber, 1);
+           if (currentValue != 1) {
+               //If there are multiple of the same items remove only one from the total Quantity
+               model.removeRow(rowNumber);
+               model.addRow(new Object[] {
+                    getItem_Names().get(indexOfSelectedItem), 
+                    currentValue - 1, 
+                    getItem_Prices().get(indexOfSelectedItem)
+                });
+           } else {
+               //if there is only one item in the row just remove it
+               model.removeRow(rowNumber);
+           }
+       } else {
+           JOptionPane.showMessageDialog(null, "No more items of that type on receipt!", "Already empty", 2);
+       }
+       calculateSum();
+    }//GEN-LAST:event_removeFromReceiptMouseClicked
+
+    private void clearCurrentReceiptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearCurrentReceiptActionPerformed
+        clearCurrentReceipt();
+    }//GEN-LAST:event_clearCurrentReceiptActionPerformed
+
+    private void clearCurrentReceipt() {
+        DefaultTableModel model = (DefaultTableModel) currentReceiptTable.getModel();
+        if (currentReceiptTable.getRowCount() > 0) {
+            for(int i = currentReceiptTable.getRowCount(); i > 0; i--) {
+                model.removeRow(i - 1);
+            }
+            sumDisplayLabel.setText("0");
+        } else {
+            JOptionPane.showMessageDialog(null, "Current receipt is empty!", "Receipt empty", 2);
+        }
+    }
+    private void finalizeCurrentReceiptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizeCurrentReceiptActionPerformed
+        DefaultTableModel model = (DefaultTableModel) currentReceiptTable.getModel();
+        
+        PreparedStatement st;
+        ResultSet rs;
+        String query;
+        int status = -2;
+        int newReceiptId = -1;
+        
+        String itemName;
+        int itemQuantity;
+        int indexOfItem;
+        int itemId;
+        
+        if(currentReceiptTable.getRowCount() > 0) {
+            
+            //Make a new receipt in receipts (get its ID later)
+            query = "INSERT INTO `receipts` VALUES ()";
+            
+            try {
+                st = My_CNX.getConnection().prepareStatement(query);
+                status = st.executeUpdate();
+            } catch(SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Could not create a new receipt!\nExiting program.", "Critical Error!", 2);
+                Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            //This block should never happen but just in case...
+            if (status == -2) {
+                JOptionPane.showMessageDialog(null, "Receipt created unsuccessfully!\nExiting program.", "Critical Error!", 2);
+                System.exit(0);
+            }
+            
+            //Get the receipt ID of the newly created receipt
+            query = "SELECT * FROM receipts ORDER BY `receipt_id` DESC LIMIT 1 ";
+            try {
+                st = My_CNX.getConnection().prepareStatement(query);
+                rs = st.executeQuery();
+                while (rs.next()) {
+                    newReceiptId = Integer.parseInt(rs.getString("receipt_id"));
+                }
+            } catch(SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Could not get receipt ID!\nExiting program.", "Critical Error!", 2);
+                Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+                System.exit(0);
+            }
+            
+            //If a new receipt has been successfully created:
+            //Get all of the contents of the current receipt from the table, and send them to the DB
+            for (int i = 0; i < currentReceiptTable.getRowCount(); i++) {
+                //Get all of the contents of the current row, and get the item ID and Quantity to send to DB
+                itemQuantity = (int) model.getValueAt(i, 1);
+                itemName = (String) model.getValueAt(i, 0);
+                indexOfItem = getItem_Names().indexOf(itemName);
+                itemId = Integer.parseInt((String) getItem_IDs().get(indexOfItem));
+                
+                //Add the appropriate item and quantity to the receipt_items, under the beforementioned receipt ID                
+                query = "INSERT INTO `receipt_items`(`rececipt_itemList_id`, `item_id`, `item_quantity`) VALUES (?, ?, ?)";
+                try {
+                    st = My_CNX.getConnection().prepareStatement(query);
+                    st.setString(1, String.valueOf(newReceiptId));
+                    st.setString(2, String.valueOf(itemId));
+                    st.setString(3, String.valueOf(itemQuantity));
+                    st.executeUpdate();
+                } catch(SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Could not finalize receipt!\nExiting program.", "Critical Error!", 2);
+                    Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+                    System.exit(0);
+                }
+            }
+            clearCurrentReceipt();
+            JOptionPane.showMessageDialog(null, "Receipt successfuly saved!", "Success", 1);
+        } else {
+            JOptionPane.showMessageDialog(null, "Current receipt is empty!", "Receipt empty", 2);
+        }
+    }//GEN-LAST:event_finalizeCurrentReceiptActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -451,20 +657,16 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel addToReceipt;
+    private javax.swing.JButton clearCurrentReceipt;
+    private javax.swing.JTable currentReceiptTable;
+    private javax.swing.JButton finalizeCurrentReceipt;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -472,12 +674,15 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel logoutIcon;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel removeFromReceipt;
+    private javax.swing.JComboBox<String> selectWhatToAdd;
+    private javax.swing.JLabel sumDisplayLabel;
     private javax.swing.JPanel usernamePanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -38,9 +38,7 @@ public class My_CNX {
         
         try {
             cnx = datasource.getConnection();
-            System.out.println("Successfully connected!");
         } catch (SQLException ex) {
-            System.out.println("Connection failed!");
             JOptionPane.showMessageDialog(null, "Database connection error!", "Database Error", 2);
             Logger.getLogger("Get Connection -> " + My_CNX.class.getName()).log(Level.SEVERE, null, ex);
         }
