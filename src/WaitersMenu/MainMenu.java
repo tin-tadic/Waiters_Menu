@@ -71,6 +71,7 @@ public class MainMenu extends javax.swing.JFrame {
         //INITIALIZED WITHOUT LOGIN---------------------------------------------
         getAvailabaleGoods();
         //INITIALIZED WITHOUT LOGIN---------------------------------------------
+        getPreviousReceipts();
     }
     
     public MainMenu(String username) {
@@ -80,6 +81,8 @@ public class MainMenu extends javax.swing.JFrame {
         
         //Can't fill the ComboBox before it exists
         getAvailabaleGoods();
+        
+        getPreviousReceipts();
     }
 
     
@@ -136,7 +139,7 @@ public class MainMenu extends javax.swing.JFrame {
         return -1;
     }
     
-    //This function only updates the Quantity column
+    //This function only changes the Quantity column
     public void updateIfExists(int rowNumber) {
         DecimalFormat df = new DecimalFormat("0.00");
         
@@ -176,6 +179,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
+        previousReceiptsTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -259,19 +263,46 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText("Previous receipts:");
 
+        previousReceiptsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Items (Quantity)", "Total Price"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        previousReceiptsTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(previousReceiptsTable);
+        if (previousReceiptsTable.getColumnModel().getColumnCount() > 0) {
+            previousReceiptsTable.getColumnModel().getColumn(1).setMinWidth(80);
+            previousReceiptsTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+            previousReceiptsTable.getColumnModel().getColumn(1).setMaxWidth(80);
+        }
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 486, Short.MAX_VALUE))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 337, Short.MAX_VALUE))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -418,18 +449,8 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(clearCurrentReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                            .addComponent(finalizeCurrentReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -438,11 +459,20 @@ public class MainMenu extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(addToReceipt)
                                 .addComponent(removeFromReceipt)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addGap(31, 31, 31)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(1, 1, 1)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(clearCurrentReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                            .addComponent(finalizeCurrentReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -547,6 +577,7 @@ public class MainMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Current receipt is empty!", "Receipt empty", 2);
         }
     }
+    
     private void finalizeCurrentReceiptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizeCurrentReceiptActionPerformed
         DefaultTableModel model = (DefaultTableModel) currentReceiptTable.getModel();
         
@@ -581,7 +612,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
             
             //Get the receipt ID of the newly created receipt
-            query = "SELECT * FROM receipts ORDER BY `receipt_id` DESC LIMIT 1 ";
+            query = "SELECT * FROM receipts ORDER BY `receipt_id` DESC LIMIT 1";
             try {
                 st = My_CNX.getConnection().prepareStatement(query);
                 rs = st.executeQuery();
@@ -618,12 +649,74 @@ public class MainMenu extends javax.swing.JFrame {
                 }
             }
             clearCurrentReceipt();
+            getPreviousReceipts();
             JOptionPane.showMessageDialog(null, "Receipt successfuly saved!", "Success", 1);
         } else {
             JOptionPane.showMessageDialog(null, "Current receipt is empty!", "Receipt empty", 2);
         }
     }//GEN-LAST:event_finalizeCurrentReceiptActionPerformed
 
+    private void getPreviousReceipts() {
+        DefaultTableModel model = (DefaultTableModel) previousReceiptsTable.getModel();
+        DecimalFormat df = new DecimalFormat("0.00");
+        
+        //First clear the table..
+        int rowCount = previousReceiptsTable.getRowCount();
+        System.out.println(rowCount);
+        for (int i = rowCount; i > 0; i--) {
+            model.removeRow(i-1);
+        }
+        
+        //...then add everything
+        int newReceiptId;
+        int previousReceiptId = -1;
+        String cellContents = "";
+        
+        float sum = 0;
+        
+        PreparedStatement st;
+        ResultSet rs;
+        //SELECT * FROM receipts JOIN receipt_items ON receipts.receipt_id = receipt_items.rececipt_itemList_id JOIN items ON receipt_items.item_id = items.item_id ORDER BY `receipt_id` DESC LIMIT 50
+        String query = "SELECT * FROM receipts"
+                + " JOIN receipt_items ON receipts.receipt_id = receipt_items.rececipt_itemList_id"
+                + " JOIN items ON receipt_items.item_id = items.item_id"
+                + " ORDER BY `receipt_id` DESC LIMIT 50";
+        try {
+            st = My_CNX.getConnection().prepareStatement(query);
+            rs = st.executeQuery();
+            
+            //This will fail to iterate through to the final result of the query
+            //That is a non-issue because it only happens when there is exactly 1 transaction in the databse
+            //That means the very first transaction will not be visible with this, but every subsequent one will display properly
+            while(rs.next()) {
+                newReceiptId = Integer.parseInt(rs.getString("receipt_id"));
+
+                if (newReceiptId == previousReceiptId || previousReceiptId == -1) {
+                    //While the receiptId of the next receipt is the same as the old one, add it to cellContents...
+                    previousReceiptId = newReceiptId;
+                    cellContents += (rs.getString("item_name") + " (" + rs.getString("item_quantity") + ")  ");
+                    sum += Float.parseFloat(rs.getString("item_quantity")) * Float.parseFloat(rs.getString("item_price"));
+                } else {
+                    //...and as soon as we get a new receiptId, we add the cellContents to the table
+                    previousReceiptId = newReceiptId;
+                    
+                    model.addRow(new Object[] {
+                        cellContents,
+                        df.format(sum)
+                    });
+                    
+                    //reset the cellContents and sum
+                    sum = Float.parseFloat(rs.getString("item_quantity")) * Float.parseFloat(rs.getString("item_price"));
+                    cellContents = (rs.getString("item_name") + " (" + rs.getString("item_quantity") + ") ");
+                }                
+            }
+            
+        } catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Could not get previous receipts!\nExiting program.", "Critical Error!", 2);
+            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(0);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -680,6 +773,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel logoutIcon;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JTable previousReceiptsTable;
     private javax.swing.JLabel removeFromReceipt;
     private javax.swing.JComboBox<String> selectWhatToAdd;
     private javax.swing.JLabel sumDisplayLabel;
