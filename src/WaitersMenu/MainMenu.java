@@ -51,12 +51,6 @@ public class MainMenu extends javax.swing.JFrame {
         return item_Prices;
     }
     
-    //Used to create trash icon labels for the article rows in the current receipt
-    private ArrayList<JLabel> listOfLabels = new ArrayList<>();
-    public ArrayList getListOfLabels() {
-        return listOfLabels;
-    }
-    
 
     
     /**
@@ -174,6 +168,7 @@ public class MainMenu extends javax.swing.JFrame {
         logoutIcon = new javax.swing.JLabel();
         usernamePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         selectWhatToAdd = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -198,11 +193,17 @@ public class MainMenu extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        nameLabel.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        nameLabel.setText("Caffe Name");
+        jPanel1.setBackground(new java.awt.Color(255, 87, 51));
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
+
+        nameLabel.setBackground(new java.awt.Color(0, 0, 0));
+        nameLabel.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        nameLabel.setForeground(new java.awt.Color(240, 240, 240));
+        nameLabel.setText("Konobarski Meni - Skripta");
         nameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        logoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/WaitersMenu/images/trash.png"))); // NOI18N
+        logoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/WaitersMenu/images/door.png"))); // NOI18N
         logoutIcon.setBackground(new Color (0, 0, 0, 0));
         logoutIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -210,6 +211,12 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        usernamePanel.setBackground(new java.awt.Color(51, 51, 51));
+        usernamePanel.setForeground(new java.awt.Color(240, 240, 240));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText(getUsername());
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -218,8 +225,8 @@ public class MainMenu extends javax.swing.JFrame {
         usernamePanelLayout.setHorizontalGroup(
             usernamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, usernamePanelLayout.createSequentialGroup()
-                .addGap(247, 247, 247)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         usernamePanelLayout.setVerticalGroup(
@@ -230,6 +237,14 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        jButton1.setText("Edit profile");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -238,10 +253,12 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(usernamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(logoutIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(45, 45, 45)
+                .addComponent(logoutIcon)
+                .addGap(39, 39, 39))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,11 +267,13 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(usernamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logoutIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
+                    .addComponent(nameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setForeground(new java.awt.Color(240, 240, 240));
 
         selectWhatToAdd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
         selectWhatToAdd.setToolTipText("");
@@ -262,6 +281,8 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText("Previous receipts:");
+
+        jScrollPane3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
 
         previousReceiptsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -305,12 +326,21 @@ public class MainMenu extends javax.swing.JFrame {
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
         );
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("Add a new item to the receipt:");
+
+        jPanel5.setBackground(new java.awt.Color(0, 0, 0));
 
         jPanel6.setBackground(new java.awt.Color(102, 102, 102));
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/WaitersMenu/images/sum.png"))); // NOI18N
         jLabel4.setText("SUM");
+
+        sumDisplayLabel.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        sumDisplayLabel.setForeground(new java.awt.Color(240, 240, 240));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -371,6 +401,8 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/WaitersMenu/images/money.png"))); // NOI18N
         jLabel9.setText("Current receipt");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -391,6 +423,7 @@ public class MainMenu extends javax.swing.JFrame {
         );
 
         addToReceipt.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        addToReceipt.setForeground(new java.awt.Color(240, 240, 240));
         addToReceipt.setText("+");
         addToReceipt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -399,6 +432,7 @@ public class MainMenu extends javax.swing.JFrame {
         });
 
         removeFromReceipt.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        removeFromReceipt.setForeground(new java.awt.Color(240, 240, 240));
         removeFromReceipt.setText("-");
         removeFromReceipt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -406,14 +440,22 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        clearCurrentReceipt.setBackground(new java.awt.Color(255, 87, 51));
+        clearCurrentReceipt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        clearCurrentReceipt.setForeground(new java.awt.Color(240, 240, 240));
         clearCurrentReceipt.setText("Clear");
+        clearCurrentReceipt.setBorderPainted(false);
         clearCurrentReceipt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearCurrentReceiptActionPerformed(evt);
             }
         });
 
+        finalizeCurrentReceipt.setBackground(new java.awt.Color(255, 87, 51));
+        finalizeCurrentReceipt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        finalizeCurrentReceipt.setForeground(new java.awt.Color(240, 240, 240));
         finalizeCurrentReceipt.setText("Finalize");
+        finalizeCurrentReceipt.setBorderPainted(false);
         finalizeCurrentReceipt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 finalizeCurrentReceiptActionPerformed(evt);
@@ -436,14 +478,14 @@ public class MainMenu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(removeFromReceipt))
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 380, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 383, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(clearCurrentReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(clearCurrentReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(finalizeCurrentReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(finalizeCurrentReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -459,7 +501,7 @@ public class MainMenu extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(addToReceipt)
                                 .addComponent(removeFromReceipt)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(1, 1, 1)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -472,7 +514,7 @@ public class MainMenu extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(clearCurrentReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                             .addComponent(finalizeCurrentReceipt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -491,7 +533,7 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -506,7 +548,7 @@ public class MainMenu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -656,6 +698,15 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_finalizeCurrentReceiptActionPerformed
 
+    //Load edit user page info
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        EditUser eu = new EditUser();
+        eu.setVisible(true);
+        eu.pack();
+        eu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_jButton1MouseClicked
+
     private void getPreviousReceipts() {
         DefaultTableModel model = (DefaultTableModel) previousReceiptsTable.getModel();
         DecimalFormat df = new DecimalFormat("0.00");
@@ -756,6 +807,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton clearCurrentReceipt;
     private javax.swing.JTable currentReceiptTable;
     private javax.swing.JButton finalizeCurrentReceipt;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

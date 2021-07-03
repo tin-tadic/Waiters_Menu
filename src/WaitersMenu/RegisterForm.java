@@ -60,29 +60,32 @@ public class RegisterForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(204, 0, 51));
+        jPanel1.setBackground(new java.awt.Color(255, 87, 51));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(255, 87, 51));
+        jPanel2.setToolTipText("");
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 
-        backToLoginButton.setBackground(new java.awt.Color(73, 0, 255));
+        backToLoginButton.setBackground(new java.awt.Color(255, 87, 51));
         backToLoginButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        backToLoginButton.setForeground(new java.awt.Color(255, 255, 255));
         backToLoginButton.setText("< Back to login");
+        backToLoginButton.setBorderPainted(false);
         backToLoginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        backToLoginButton.setOpaque(true);
         backToLoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backToLoginButtonActionPerformed(evt);
             }
         });
 
-        exitButton.setBackground(new java.awt.Color(0, 0, 255));
+        exitButton.setBackground(new java.awt.Color(255, 87, 51));
         exitButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        exitButton.setForeground(new java.awt.Color(204, 102, 0));
+        exitButton.setForeground(new java.awt.Color(255, 255, 255));
         exitButton.setText("Exit");
+        exitButton.setBorderPainted(false);
         exitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        exitButton.setOpaque(true);
         //Allows for the background to show
         exitButton.setBorderPainted(false);
         exitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -92,16 +95,22 @@ public class RegisterForm extends javax.swing.JFrame {
         });
 
         usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        usernameLabel.setForeground(new java.awt.Color(255, 255, 255));
         usernameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         usernameLabel.setText("Username: ");
+        usernameLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        passwordLabel.setBackground(new java.awt.Color(0, 0, 0));
         passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        passwordLabel.setForeground(new java.awt.Color(255, 255, 255));
         passwordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         passwordLabel.setText("Confirm:");
+        passwordLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         usernameInputBorder.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         usernameInput.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        usernameInput.setMinimumSize(new java.awt.Dimension(7, 40));
 
         javax.swing.GroupLayout usernameInputBorderLayout = new javax.swing.GroupLayout(usernameInputBorder);
         usernameInputBorder.setLayout(usernameInputBorderLayout);
@@ -111,7 +120,7 @@ public class RegisterForm extends javax.swing.JFrame {
         );
         usernameInputBorderLayout.setVerticalGroup(
             usernameInputBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(usernameInput, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+            .addComponent(usernameInput, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         passwordInputBorder.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -126,7 +135,7 @@ public class RegisterForm extends javax.swing.JFrame {
         );
         passwordInputBorderLayout.setVerticalGroup(
             passwordInputBorderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(passwordInput, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+            .addComponent(passwordInput)
         );
 
         passwordInputBorder1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -141,16 +150,20 @@ public class RegisterForm extends javax.swing.JFrame {
         );
         passwordInputBorder1Layout.setVerticalGroup(
             passwordInputBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(passwordConfirmInput, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+            .addComponent(passwordConfirmInput)
         );
 
         passwordLabel1.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        passwordLabel1.setForeground(new java.awt.Color(255, 255, 255));
         passwordLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         passwordLabel1.setText("Password:");
+        passwordLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        registerButton.setBackground(new java.awt.Color(255, 87, 51));
         registerButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        registerButton.setForeground(new java.awt.Color(255, 255, 255));
         registerButton.setText("Register");
-        registerButton.setOpaque(true);
+        registerButton.setBorderPainted(false);
         registerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registerButtonActionPerformed(evt);
@@ -189,32 +202,33 @@ public class RegisterForm extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(usernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(usernameInputBorder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usernameInputBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(passwordInputBorder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(passwordLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(passwordLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passwordInputBorder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(passwordInputBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passwordInputBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backToLoginButton)
                     .addComponent(exitButton))
                 .addContainerGap())
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {passwordInputBorder, passwordInputBorder1, usernameInputBorder});
+        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-
+        REGISTER_text.setBackground(new java.awt.Color(0, 0, 0));
         REGISTER_text.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        REGISTER_text.setForeground(new java.awt.Color(255, 255, 255));
         REGISTER_text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        REGISTER_text.setIcon(new javax.swing.ImageIcon(getClass().getResource("/WaitersMenu/images/burgar.png")));
         REGISTER_text.setText("REGISTER");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -239,15 +253,12 @@ public class RegisterForm extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -300,7 +311,6 @@ public class RegisterForm extends javax.swing.JFrame {
         String username = usernameInput.getText();
         String password =  String.valueOf(passwordInput.getPassword());
         String confirmedPassword =  String.valueOf(passwordConfirmInput.getPassword());
-        
         PreparedStatement st;
         ResultSet rs;
         
