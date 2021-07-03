@@ -56,10 +56,15 @@ public class EditUser extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 255));
-        jPanel3.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 87, 51));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(255, 87, 51));
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
         jLabel1.setText("EDIT");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -79,18 +84,26 @@ public class EditUser extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
         jLabel2.setText("    Username");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("    Password");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(240, 240, 240));
         jLabel4.setText("New password");
+        jLabel4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        jButton1.setBackground(new java.awt.Color(255, 87, 51));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(240, 240, 240));
         jButton1.setText("< Back to login");
+        jButton1.setBorderPainted(false);
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -102,7 +115,11 @@ public class EditUser extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(255, 87, 51));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(240, 240, 240));
         jButton2.setText("Save changes");
+        jButton2.setBorderPainted(false);
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -114,7 +131,11 @@ public class EditUser extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 87, 51));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(240, 240, 240));
         jButton3.setText("Delete account");
+        jButton3.setBorderPainted(false);
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
@@ -163,28 +184,28 @@ public class EditUser extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(usernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(usernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(newPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(newPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton2, jButton3});
 
         jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, newPasswordInput, passwordInput, usernameInput});
 
@@ -261,8 +282,8 @@ public class EditUser extends javax.swing.JFrame {
         String newPassword = String.valueOf(newPasswordInput.getPassword());
 
         //Check if they are empty
-        if ( ("".equals(username) || "".equals(password)) && "".equals(newPassword)) {
-            JOptionPane.showMessageDialog(null, "Please enter your details", "Data Error", 2);
+        if ( "".equals(username) || "".equals(password) || "".equals(newPassword) || newPassword.length() < 6) {
+            JOptionPane.showMessageDialog(null, "Please enter your details. New Password must be at least 6 chars long.", "Data Error", 2);
         } else {
             //Check if they exist in the database
             String query = "SELECT * FROM `users` WHERE `username` = ? AND `password` = ?";
@@ -284,6 +305,7 @@ public class EditUser extends javax.swing.JFrame {
                     st.executeUpdate();
                     
                     //Log the user back in
+                    JOptionPane.showMessageDialog(null, "Account edited successfully!", "Success!", 2);
                     MainMenu mm = new MainMenu(username);
                     mm.setVisible(true);
                     mm.pack();
@@ -308,12 +330,12 @@ public class EditUser extends javax.swing.JFrame {
         //Fetchs username and password from fields
         String username = usernameInput.getText();
         String password =  String.valueOf(passwordInput.getPassword());
+        String newPassword = String.valueOf(newPasswordInput.getPassword());
 
         //Check if they are empty
-        if ( ("".equals(username) || "".equals(password))) {
+        if ( ("".equals(username) || "".equals(password)) || !("".equals(newPassword))) {
             JOptionPane.showMessageDialog(null, "Please enter your details and leave the new password field empty!", "Data Error", 2);
         } else {
-            System.out.println("working");
             //Check if they exist in the database
             String query = "SELECT * FROM `users` WHERE `username` = ? AND `password` = ?";
             try {
@@ -325,6 +347,14 @@ public class EditUser extends javax.swing.JFrame {
 
                 //Then update the entries in the database
                 if (rs.next()) {
+                    //Copy the username into the deleted_users table
+                    PreparedStatement insertPS;
+                    String addUser = "INSERT INTO `deleted_users` (`username`) VALUES (?)";
+                    insertPS = My_CNX.getConnection().prepareStatement(addUser);
+                    insertPS.setString(1, username);
+                    insertPS.executeUpdate();
+                    
+                    
                     String updater = "DELETE FROM `users` WHERE `username` = ?";
                     
                     st = My_CNX.getConnection().prepareStatement(updater);
@@ -332,6 +362,7 @@ public class EditUser extends javax.swing.JFrame {
                     
                     st.executeUpdate();
                     
+                    JOptionPane.showMessageDialog(null, "Account deleted successfully!", "Success!", 2);
                     //Redirect the user to login
                     LoginForm lf = new LoginForm();
                     lf.setVisible(true);
